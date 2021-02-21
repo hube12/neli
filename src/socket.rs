@@ -924,4 +924,14 @@ mod test {
         nl.push(nl_next2);
         assert_eq!(nl, v);
     }
+
+    #[test]
+    fn real_test_resolve() {
+        let mut sock = NlSocketHandle::new(NlFamily::Generic).unwrap();
+        let id = sock.resolve_nl_mcast_group("nlctrl", "notify").unwrap();
+        assert_eq!(
+            sock.lookup_id(id).unwrap(),
+            ("nlctrl".to_string(), "notify".to_string())
+        );
+    }
 }
